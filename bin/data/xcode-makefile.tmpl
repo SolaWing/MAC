@@ -1,0 +1,22 @@
+proj=$project_path
+workspace=\${proj}/project.xcworkspace
+
+.PHONY:#slurp
+#for $configuration in $configurations
+  #for $scheme in $schemes
+  build_${configuration}_${scheme}#slurp
+  #end for
+#end for
+
+#for $configuration in $configurations
+  #for $scheme in $schemes
+build_${configuration}_${scheme}:
+	xcodebuild -workspace \${workspace} -configuration $configuration -scheme "$scheme" \${opt} build
+  #end for
+#end for
+
+#if $len($configurations) > 0 and $len($schemes) > 0
+all: build_${configurations[0]}_${schemes[0]}
+#else
+\#all: build_debug
+#end if

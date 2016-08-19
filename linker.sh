@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-HOME_FILES=(.CFUserTextEncoding .bash_profile .bashrc .clang-format .config .gitconfig .lldbinit lldb_script)
+HOME_FILES=(.CFUserTextEncoding .bash_profile .bashrc .clang-format .config .gitconfig .lldbinit lldb_script bin)
 
 function linkFiles () {
     for i in "${HOME_FILES[@]}"; do

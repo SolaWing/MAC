@@ -1,0 +1,36 @@
+
+import fcntl
+import errno
+
+with open('a', 'w') as f:
+    print("open file")
+    raw_input()
+
+f = open('a', 'w')
+print ("opened")
+print (errno.EWOULDBLOCK)
+ret = fcntl.flock(f, fcntl.LOCK_EX|fcntl.LOCK_NB)
+print ("Locked", ret)
+raw_input()
+fcntl.flock(f, fcntl.LOCK_UN)
+print ("unlock")
+fcntl.flock(f, fcntl.LOCK_UN)
+print ("unlock")
+
+import interProcess
+import threading
+import time
+
+print (__file__, __name__)
+
+def lock():
+    l = interProcess.RLock(__name__)
+    print("createLock")
+    with l:
+        print('enterLock', threading.current_thread())
+        time.sleep(10) # simulate do work
+    print("exit Lock")
+
+t = threading.Thread(target = lock)
+t.start()
+lock()
