@@ -3,21 +3,37 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 HOME_FILES=(.CFUserTextEncoding .bash_profile .bashrc .clang-format .config .gitconfig .lldbinit lldb_script bin)
 
+function linkfile () {
+    echo link "$1" in $2
+    ln -s "$1" "$2"
+}
+function copyfile () {
+    echo copy "$1" to dir $2
+    cp -af "$1" "$2"
+}
+function unlinkfile () {
+    if [[ -h "$1" ]]; then
+        echo rm link "$1";
+        rm "$1";
+    fi
+}
+
 function linkFiles () {
     for i in "${HOME_FILES[@]}"; do
-        p="$DIR/$i"
-        echo link "$p" in ~
-        ln -s "$p" ~
+        linkfile "$DIR/$i" ~
+    done
+    for i in "$DIR/Services/"*; do
+        copyfile "$i" "$HOME/Library/Services"
     done
 }
 function unlinkFiles () {
     for i in "${HOME_FILES[@]}"; do
-        p="$HOME/$(basename "$i")"
-        if [[ -h "$p" ]]; then
-            echo rm link "$p";
-            rm "$p";
-        fi
+        unlinkfile "$HOME/$(basename "$i")"
     done
+    # dont remove Services, only overwrite it
+    # for i in "$DIR/Services/"*; do
+    #     unlinkfile "$HOME/Library/Services/$(basename "$i")"
+    # done
 }
 
 function showHelp() {
