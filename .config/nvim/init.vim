@@ -1,0 +1,1 @@
+/Users/wang/.vim/nviminit.vim

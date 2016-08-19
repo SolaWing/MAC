@@ -1,0 +1,5 @@
+.DS_store
+*.pyc
+/lldb_script/dissemble
+/.config/fish/fishd*
+/.config/fish/fish_history

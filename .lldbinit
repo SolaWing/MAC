@@ -1,0 +1,13 @@
+command script import ~/lldb_script/customCommand.py
+com alias h   help
+com alias rr  register read
+com alias rw  register write
+com alias ef  expr     -f       %1   --
+com alias ea  expr     -f       A    --
+com alias we  watch    set      expr
+com alias o   thread   step-out
+
+## this will complain error
+#com alias fr frame var -r
+#settings se stop-disassembly-count 1
+command script import /usr/local/opt/chisel/libexec/fblldb.py

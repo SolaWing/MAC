@@ -1,0 +1,38 @@
+[user]
+	email = 316786359@qq.com
+	name = solawing
+[diff]
+	tool = nvim
+	guitool = mvim
+[difftool "mvim"]
+	cmd = . ~/bin/mvimdiff.sh
+[difftool "nvim"]
+	cmd = . ~/bin/nvimdiff.sh
+[difftool]
+	prompt = false
+	trustExitCode = true
+[alias]
+	b = blame
+	c = config
+	d = diff
+	f = fetch
+	m = merge
+	mf = merge fetch_head
+	p = push
+	r = remote
+	br = branch
+	s = status
+[push]
+	default = simple
+[merge]
+	tool = nvim
+[mergetool]
+	prompt = false
+[mergetool "mvim"]
+	cmd = mvim -f -d $LOCAL $BASE $REMOTE $MERGED -c \"winc b | winc J | winc = | diffoff \"
+[mergetool "nvim"]
+	cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c \"winc b | winc J | winc = | diffoff \"
+[core]
+	quotepath = false
+
+# vim:set noet sw=4 sts=4 ts=8:
