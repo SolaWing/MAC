@@ -1,3 +1,3 @@
 function h
-	history | grep "$argv"
+	history | tail -r | grep $argv
 end
