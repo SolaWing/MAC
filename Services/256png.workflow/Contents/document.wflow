@@ -165,8 +165,8 @@
 					<key>COMMAND_STRING</key>
 					<string>for i; do
   if [[ $i == *.png ]]; then
-	#echo pngquant --quality 65-90 --speed 1 --ext .png --skip-if-larger -f -- "$i"
-	/usr/local/bin/pngquant -v --quality 65-90 --speed 1 --ext .png --skip-if-larger -f -- "$i"
+	#echo pngquant --quality 65-100 --speed 1 --ext .png --skip-if-larger -f -- "$i"
+	/usr/local/bin/pngquant -v --quality 65-100 --speed 1 --ext .png --skip-if-larger -f -- "$i"
 	#((ret=$?))
 	#if ((ret!=0)); then
 	#	echo return $ret
@@ -286,7 +286,7 @@ exit 0</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>374.500000:475.000000</string>
+				<string>374.500000:295.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/zh_CN.lproj/main.nib</string>
 			</dict>
@@ -296,7 +296,7 @@ exit 0</string>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>DD17FD62-CDEE-43AC-B7D0-33431629D027</key>
+		<key>11E2C55E-3DBE-46E7-BCE1-97901585E2C9</key>
 		<dict>
 			<key>from</key>
 			<string>0CAE1F21-9E30-4631-A650-4577443C5579 - 0CAE1F21-9E30-4631-A650-4577443C5579</string>
