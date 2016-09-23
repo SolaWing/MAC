@@ -22,12 +22,6 @@ end
 function f
 	find $argv
 end
-function g
-	grep -I $argv
-end
-function gr
-	grep -RI $argv
-end
 function md
 	mkdir $argv
 end
@@ -54,9 +48,6 @@ function v
 end
 function o
 	open $argv
-end
-function pngquantDefault
-	pngquant --quality 65-90 --speed 1 --ext .png --skip-if-larger -f -- $argv
 end
 function tp
 	/Applications/TexturePacker.app/Contents/MacOS/TexturePacker $argv
