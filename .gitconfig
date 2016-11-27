@@ -22,6 +22,7 @@
 	r = remote
 	br = branch
 	s = status
+        la = log --simplify-merges
 [push]
 	default = simple
 [merge]
