@@ -23,16 +23,21 @@
 	br = branch
 	s = status
         la = log --simplify-merges
+	stat-commit = shortlog --no-merges
+	stat-line = !sh ~/bin/git-stat-line.sh
 [push]
 	default = simple
 [merge]
-	tool = nvim
+	tool = mvim
+	guitool = mvim
 [mergetool]
 	prompt = false
 [mergetool "mvim"]
 	cmd = mvim -f -d $LOCAL $BASE $REMOTE $MERGED -c \"winc b | winc J | winc = | diffoff \"
 [mergetool "nvim"]
 	cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c \"winc b | winc J | winc = | diffoff \"
+[rebase]
+	autoStash = true
 [core]
 	quotepath = false
 
