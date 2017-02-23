@@ -1,24 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import subprocess, os, argparse
+from __future__ import print_function
+from __future__ import absolute_import
 
-def parse():
-    parser = argparse.ArgumentParser(description='xcodebuild help script')
-    parser.add_argument('-c', '--configuration', default='Release',
-                        help = 'configurations, default Release')
-    parser.add_argument('-s', '--schema', action='append',
-                        help='schema use to build, can specify multiple times')
-    parser.add_argument('-d', '--destination', action='append',
-                        default = ['platform=iOS Simulator,name=iPhone 5', 'generic/platform=iOS'],
-                        help='build destination, can specify multiple times, default to iOS platform and simulator')
-    parser.add_argument('-w', '--workspace', help = 'workspace use to build')
-    parser.add_argument('-u', '--universal', action='store_false', help='flag to build universal libraries')
+import subprocess, os, sys
 
-    return parser.parse_args()
+def show_help():
+    print("usage: " + __file__ +  " project targetname (other xcodebuild args...)")
+    subprocess.check_call(["xcodebuild", "-help"], stdout = sys.stdout)
+    exit()
 
 def main():
-    pass
+    if any( a in ("-h", "--help", "help", "-help") for a in sys.argv[1:] ):
+        show_help()
+
+    project = sys.argv[1]
+    assert project.endswith(".xcodeproj")
+
+    target = sys.argv[2]
+
+
 
 if __name__ == "__main__":
     main()

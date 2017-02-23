@@ -114,9 +114,6 @@ end
 function gls
 	git log --stat $argv
 end
-function glp
-	git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative $argv
-end
 function gldel
 	git log --diff-filter=D --summary $argv
 end
