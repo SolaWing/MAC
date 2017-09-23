@@ -43,3 +43,5 @@
 	quotepath = false
 [grep]
 	patternType = perl
+[rerere]
+	enabled = true
