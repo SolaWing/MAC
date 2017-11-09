@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>419</string>
+	<string>428</string>
 	<key>AMApplicationVersion</key>
-	<string>2.6</string>
+	<string>2.7</string>
 	<key>AMDocumentVersion</key>
 	<string>2</string>
 	<key>actions</key>
@@ -52,11 +52,11 @@
 				<dict>
 					<key>fileNames</key>
 					<array>
-						<string>~/Desktop/aaa.scpt</string>
-						<string>~/Desktop/面谈.txt</string>
-						<string>~/Desktop/5.2.0.org</string>
-						<string>~/Desktop/bbb.scpt</string>
-						<string>~/Desktop/5.2.3.org</string>
+						<string>~/Downloads/iphonexcrash.crash</string>
+						<string>~/Downloads/nonetwork/无网络.png</string>
+						<string>~/Downloads/nonetwork/无网络3x.png</string>
+						<string>~/Downloads/nonetwork/无网络night.png</string>
+						<string>~/Downloads/nonetwork/无网络night3x.png</string>
 					</array>
 				</dict>
 				<key>BundleIdentifier</key>
@@ -115,7 +115,7 @@
 				<key>location</key>
 				<string>374.500000:112.000000</string>
 				<key>nibPath</key>
-				<string>/System/Library/Automator/Get Specified Finder Items.action/Contents/Resources/zh_CN.lproj/main.nib</string>
+				<string>/System/Library/Automator/Get Specified Finder Items.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
 			<false/>
@@ -169,7 +169,8 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>exec ~/bin/rename.js "$@"</string>
+					<string>osascript bin/itermOpen.js massren "$@"
+</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
@@ -194,7 +195,7 @@
 				<key>Class Name</key>
 				<string>RunShellScriptAction</string>
 				<key>InputUUID</key>
-				<string>F93F480B-091A-4FE4-A6F1-6092626F2D3F</string>
+				<string>9C398DCC-2A5E-47FA-99D5-14BDC6B7677A</string>
 				<key>Keywords</key>
 				<array>
 					<string>Shell</string>
@@ -204,9 +205,9 @@
 					<string>Unix</string>
 				</array>
 				<key>OutputUUID</key>
-				<string>28C4F485-873E-48ED-8967-3029A0C1196F</string>
+				<string>317F3407-A5A7-49AE-8326-BB62BCDD7426</string>
 				<key>UUID</key>
-				<string>FE81449A-E4C7-4768-858A-8BB9BB5CB229</string>
+				<string>861D0F16-4DC7-4417-9FEF-E40716A881A7</string>
 				<key>UnlocalizedApplications</key>
 				<array>
 					<string>Automator</string>
@@ -279,10 +280,12 @@
 						<string>4</string>
 					</dict>
 				</dict>
+				<key>conversionLabel</key>
+				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>374.500000:295.000000</string>
+				<string>374.500000:475.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/zh_CN.lproj/main.nib</string>
 			</dict>
@@ -292,12 +295,12 @@
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>1F01AAE9-6108-4B98-B27F-6B2F0D31BDA2</key>
+		<key>8ED48BF7-7995-4777-9441-0126DEF80015</key>
 		<dict>
 			<key>from</key>
 			<string>311529F6-6CE5-42DC-890F-3C20DFFC7444 - 311529F6-6CE5-42DC-890F-3C20DFFC7444</string>
 			<key>to</key>
-			<string>FE81449A-E4C7-4768-858A-8BB9BB5CB229 - FE81449A-E4C7-4768-858A-8BB9BB5CB229</string>
+			<string>861D0F16-4DC7-4417-9FEF-E40716A881A7 - 861D0F16-4DC7-4417-9FEF-E40716A881A7</string>
 		</dict>
 	</dict>
 	<key>workflowMetaData</key>

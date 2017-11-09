@@ -13,15 +13,6 @@ end
 function la
 	ls -lAh $argv
 end
-function fd
-	find . -type d -name $argv
-end
-function ff
-	find . -type f -name $argv
-end
-function f
-	find $argv
-end
 function md
 	mkdir $argv
 end
@@ -39,9 +30,6 @@ function vim
 end
 function bvim
 	nvim -b --noplugin $argv
-end
-function map
-	xargs -n1 $argv
 end
 function v
 	nvim $argv
@@ -67,7 +55,7 @@ function ga
 	git add $argv
 end
 function gbr
-	git branch $argv
+	git branch -vv $argv
 end
 function gc
 	git commit $argv
@@ -141,6 +129,7 @@ end
 function gstash
 	git stash $argv
 end
+
 function trm
 	/bin/rm $argv
 end
