@@ -1,5 +1,5 @@
 #!/bin/bash
-
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 function print_args () {
     echo count is $#
@@ -18,8 +18,7 @@ function install_brew () {
         ripgrep
         fd
         clang-format
-        # d12frosted/emacs-plus/emacs-plus --without-librsvg --without-imagemagick@6
-        laurent22/massren/massren
+        laurent22/massren/massren # file rename util
         tmux
         httpie
 
@@ -47,9 +46,35 @@ function install_brew_app () {
     brew cask install bitbar macvim
 }
 
-if (($#==0)); then
-    echo 'use `'$0' install` to install brew packages'
-elif [[ $1 == install ]]; then
+function install_pip3 () {
+    packages=(
+        pip setuptools neovim ipython
+        virtualenv
+        vprof # visual profile packages
+    )
+    pip3 install -U "${packages[@]}"
+}
+
+function link_file () {
+    bash "$DIR"linker.sh link
+}
+
+function install () {
     install_brew
     install_brew_app
+    install_pip3
+    link_file
+}
+
+if (($#==0)); then
+    echo 'optional cmd is
+    install -- install all
+    install_brew
+    install_brew_app
+    link_file
+    '
+else
+    for i; do
+        "$i"
+    done
 fi
