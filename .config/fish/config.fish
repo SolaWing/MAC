@@ -1,5 +1,6 @@
 set DIR (dirname (status -f))
 
+set -xg PATH $PATH ~/.cargo/bin
 set -xg EDITOR  'nvim'
 set -xg LANG  'zh_CN.UTF-8'
 set -xg CLICOLOR  1
