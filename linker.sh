@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-HOME_FILES=(.CFUserTextEncoding .bash_profile .bashrc .clang-format .config .gitconfig .lldbinit lldb_script bin)
+HOME_FILES=(.CFUserTextEncoding .bash_profile .bashrc .clang-format .config .gitconfig .lldbinit .tmux.conf lldb_script bin)
 
 function linkfile () {
     echo link "$1" in $2
