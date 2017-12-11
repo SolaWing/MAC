@@ -15,5 +15,8 @@ function run(argv) {
     // var oldApp = evt.processes.whose({"frontmost": true })[0].name();
     var iterm = Application("iTerm");
     iterm.activate();
-    var win = iterm.createWindowWithDefaultProfile({command: escapeCmd(argv) });
+    // var win = iterm.createWindowWithDefaultProfile({command: escapeCmd(argv) });
+    var win = iterm.createWindowWithDefaultProfile();
+    // use write text to ensure PATH env load
+    iterm.write(win.currentSession, {text: `${escapeCmd(argv)}; exit;`});
 }

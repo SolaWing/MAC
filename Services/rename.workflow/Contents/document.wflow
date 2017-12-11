@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>428</string>
+	<string>444.4</string>
 	<key>AMApplicationVersion</key>
-	<string>2.7</string>
+	<string>2.8</string>
 	<key>AMDocumentVersion</key>
 	<string>2</string>
 	<key>actions</key>
@@ -28,7 +28,7 @@
 				<string>1.1.2</string>
 				<key>AMApplication</key>
 				<array>
-					<string>Finder</string>
+					<string>访达</string>
 				</array>
 				<key>AMParameterProperties</key>
 				<dict>
@@ -47,16 +47,12 @@
 				<key>ActionBundlePath</key>
 				<string>/System/Library/Automator/Get Specified Finder Items.action</string>
 				<key>ActionName</key>
-				<string>获得指定的 Finder 项目</string>
+				<string>获得指定的访达项目</string>
 				<key>ActionParameters</key>
 				<dict>
 					<key>fileNames</key>
 					<array>
-						<string>~/Downloads/iphonexcrash.crash</string>
-						<string>~/Downloads/nonetwork/无网络.png</string>
-						<string>~/Downloads/nonetwork/无网络3x.png</string>
-						<string>~/Downloads/nonetwork/无网络night.png</string>
-						<string>~/Downloads/nonetwork/无网络night3x.png</string>
+						<string>~/Desktop/feng.md</string>
 					</array>
 				</dict>
 				<key>BundleIdentifier</key>
@@ -138,7 +134,7 @@
 				<string>2.0.3</string>
 				<key>AMApplication</key>
 				<array>
-					<string>Automator</string>
+					<string>自动操作</string>
 				</array>
 				<key>AMParameterProperties</key>
 				<dict>
@@ -280,12 +276,10 @@
 						<string>4</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>374.500000:475.000000</string>
+				<string>374.500000:295.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/zh_CN.lproj/main.nib</string>
 			</dict>
@@ -295,7 +289,7 @@
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>8ED48BF7-7995-4777-9441-0126DEF80015</key>
+		<key>AF171F79-0C7B-4E58-B495-FE1469BF87C0</key>
 		<dict>
 			<key>from</key>
 			<string>311529F6-6CE5-42DC-890F-3C20DFFC7444 - 311529F6-6CE5-42DC-890F-3C20DFFC7444</string>
