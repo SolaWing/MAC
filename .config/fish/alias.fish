@@ -138,6 +138,6 @@ function rm
     if contains -- -f $argv
         /bin/rm $argv
     else
-        mv $argv ~/.Trash
+        python ~/bin/trash.py $argv
     end
 end

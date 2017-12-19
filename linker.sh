@@ -11,6 +11,7 @@ HOME_FILES=(
     .lldbinit
     .tmux.conf
     .style.yapf
+    .jshintrc
     lldb_script
     bin
     )

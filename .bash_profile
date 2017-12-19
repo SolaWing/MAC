@@ -95,7 +95,7 @@ bind '"\ej":history-search-forward'
 bind '"\ek":history-search-backward'
 
 rm() {
-    mv "$@" ~/.Trash
+    ~/bin/trash.py "$@"
 }
 
 alias trm='/bin/rm'
