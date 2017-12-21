@@ -12,6 +12,7 @@ HOME_FILES=(
     .tmux.conf
     .style.yapf
     .jshintrc
+    .vim
     lldb_script
     bin
     )
