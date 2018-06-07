@@ -29,14 +29,12 @@
 [push]
 	default = simple
 [merge]
-	tool = mvim
-	guitool = mvim
+	tool = custom
+	guitool = custom
 [mergetool]
 	prompt = false
-[mergetool "mvim"]
-	cmd = mvim -f -d $LOCAL $BASE $REMOTE $MERGED -c \"winc b | winc J | winc = | diffoff \"
-[mergetool "nvim"]
-	cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c \"winc b | winc J | winc = | diffoff \"
+[mergetool "custom"]
+	cmd = bash ~/bin/mergetool.sh "$LOCAL" "$BASE" "$REMOTE" "$MERGED"
 [rebase]
 	autoStash = true
 [core]
@@ -44,4 +42,4 @@
 [grep]
 	patternType = perl
 [rerere]
-	enabled = true
+	enabled = false

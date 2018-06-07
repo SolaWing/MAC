@@ -145,18 +145,20 @@ def regVariable(debugger, command, result, internal_dict):
 
 def continueTo(debugger, command, result, internal_dict):
     """
-    short for thread until, and use current frame number
+    short for thread until -f <currentFrame> -- <linenum>. or passthrough to thread until
     :type debugger: lldb.SBDebugger
     :type command: str
     :type result: lldb.SBCommandReturnObject
     :type internal_dict: dict
     """
-    r = re.match(r'\s*(\d+)', command)
+    r = re.match(r'\s*(?:(0x[0-9a-fA-F]+)|(\d+))', command)
     if r:
-        linenum = r.group(0)
         frame = getSelectedFrame(debugger) #!! frame = SBFrame()
         fid = frame.GetFrameID()
-        s = "thread until -f %d -- %s"%(fid, linenum)
+        if r.group(1):
+            s = "thread until -f %d -a %s"%(fid, r.group(1))
+        else:
+            s = "thread until -f %d -- %s"%(fid, r.group(2))
         print s
         debugger.HandleCommand(s)
     else:
