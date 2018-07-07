@@ -21,4 +21,5 @@ function fish_title
     basename (pwd)
 end
 
+# set -xg fish_user_abbreviations # prevent save abbreviations
 source $DIR/alias.fish

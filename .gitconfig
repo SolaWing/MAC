@@ -26,6 +26,8 @@
         la = log --simplify-merges
 	stat-commit = shortlog --no-merges
 	stat-line = !sh ~/bin/git-stat-line.sh
+	# byte dance
+	rv = "!f() { git push origin HEAD:refs/for/${1:-master}%${2}; }; f"
 [push]
 	default = simple
 [merge]

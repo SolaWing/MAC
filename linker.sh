@@ -12,6 +12,7 @@ HOME_FILES=(
     .tmux.conf
     .style.yapf
     .jshintrc
+    .ctags.d
     .vim
     lldb_script
     bin
@@ -64,10 +65,9 @@ else
     willLink=false
     for i; do
         case "$i" in
-            l*) willLink=true ;;
-            u*) willUnlink=true ;;
-            -h) showHelp ;;
-            --help) showHelp ;;
+            (l*          ) willLink=true   ;;
+            (u*          ) willUnlink=true ;;
+            (-h | --help ) showHelp        ;;
         esac
     done
     $willUnlink && unlinkFiles
