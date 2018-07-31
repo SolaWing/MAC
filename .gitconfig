@@ -27,7 +27,8 @@
 	stat-commit = shortlog --no-merges
 	stat-line = !sh ~/bin/git-stat-line.sh
 	# byte dance
-	rv = "!f() { git push origin HEAD:refs/for/${1:-master}%${2}; }; f"
+    rv = "!f() { git push origin HEAD:refs/for/${1:-master}%${2:-r=liuwanlin,r=qihongye,r=linlin.leo,r=liyuguo.jeffrey,r=zhuchao.03,r=chengzhipeng,r=zhaochen.09,r=lichen.arthur,r=lvdaqian,r=supeng.charlie,r=ci-ee}; }; f"
+
 [push]
 	default = simple
 [merge]
