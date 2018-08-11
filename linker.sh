@@ -17,9 +17,12 @@ HOME_FILES=(
     lldb_script
     bin
     )
+OTHER_FILES=(
+    ipython_startup ~/.ipython/profile_default/startup
+)
 
 function linkfile () {
-    echo link "$1" in $2
+    echo link "$1" to $2
     ln -s "$1" "$2"
 }
 function copyfile () {
@@ -37,6 +40,19 @@ function linkFiles () {
     for i in "${HOME_FILES[@]}"; do
         linkfile "$DIR/$i" ~
     done
+    function f () {
+        while [[ -n $1 ]]; do
+            if [[ ! -e "$2" ]]; then
+                mkdir -p "$(dirname "$2")"
+                linkfile "$DIR/$1" "$2"
+            else
+                echo $2 already exists
+            fi
+            shift 2
+        done
+    }
+    f "${OTHER_FILES[@]}"
+    # ${#name} return 15, it's not correct
     for i in "$DIR/Services/"*; do
         copyfile "$i" "$HOME/Library/Services"
     done

@@ -1,0 +1,15 @@
+def inject_module(modulePath = "."):
+    """insert package path of moudle. and set __package__ """
+    import sys,os
+    directory = os.path.abspath(modulePath)
+    parent = os.path.dirname(directory)
+    while os.path.exists( os.path.join(parent, "__init__.py") ):
+        parent = os.path.dirname(parent)
+
+    if parent not in sys.path:
+        sys.path.insert(0, parent)
+
+    global __package__
+    __package__ = directory[len(parent+os.sep):].replace(os.sep, ".")
+
+# %load_ext autoreload
