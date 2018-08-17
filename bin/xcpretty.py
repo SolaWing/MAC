@@ -183,29 +183,67 @@ class XcodeLogParser(object):
 
         return items
 
-def dump_jsonDataBase(items, output):
+def dump_database(items, output):
     import json
     # pretty print, easy to read with editor. compact save little size. only about 0.2%
     json.dump(items, output, ensure_ascii=False, check_circular=False, indent="\t")
+
+def merge_database(items, database_path):
+    import json
+    def identifier(item):
+        if isinstance(item, dict):
+            return item.get("file")
+        return None # other type info without identifier simplely append into file
+
+    with open(database_path, "r+") as f:
+        # try best effort to keep old data
+        old_items = json.load(f)
+
+        new_file_map = {}
+        for item in items:
+            ident = identifier(item)
+            if ident: new_file_map[ident] = item
+
+        dealed = set()
+        def get_new_item(old_item):
+            if isinstance(old_item, dict):
+                ident = identifier(old_item)
+                if ident:
+                    dealed.add(ident)
+
+                    new_item = new_file_map.get(ident)
+                    if new_item: return new_item
+            return old_item
+
+        final = [get_new_item(item) for item in old_items]
+        final.extend( item for item in items if identifier(item) not in dealed )
+
+        f.seek(0)
+        dump_database(final, f)
+        f.truncate()
 
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="pass xcodebuild output log, use stderr as log")
     parser.add_argument("input", nargs="?", default="-", help="input file, default will use stdin")
     parser.add_argument("-o", "--output", default="-", help="output file, default will be stdout" )
+    parser.add_argument("-a", "--append", action="store_true", help="append to output file instead of replace. same item will be overwrite" )
     a = parser.parse_args()
 
-    if a.input == "-": a.input = sys.stdin
-    else: a.input = open(a.input, "r")
-    if a.output == "-": a.output = sys.stdout
+    if a.input == "-": in_fd = sys.stdin
+    else: in_fd = open(a.input, "r")
+    if a.output == "-": get_out_fd = lambda: sys.stdout
     else:
         global cache_dir;
         cache_dir = os.path.join( os.path.dirname(os.path.abspath(a.output)), os.path.basename(a.output) + "cache")
         os.makedirs(cache_dir, exist_ok=True)
-        a.output = open(a.output, "w")
+        get_out_fd = lambda: open(a.output, "w") # open will clear file
 
-    items = XcodeLogParser(a.input, echo).parse()
-    dump_jsonDataBase(items, a.output)
+    items = XcodeLogParser(in_fd, echo).parse()
+    if a.append and os.path.exists(a.output):
+        merge_database(items, a.output)
+    else:
+        dump_database(items, get_out_fd())
 
 if __name__ == "__main__":
     main()
