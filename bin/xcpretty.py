@@ -7,43 +7,51 @@ import shlex
 def echo(s):
     print(s, file=sys.stderr)
 
-compileSwiftModule = re.compile(r"""
+compile_swift_module = re.compile(r"""
     ^CompileSwiftSources\s*
 """, re.X)
-compileSwift = re.compile(r"""^CompileSwift\s+
+compile_swift = re.compile(r"""^CompileSwift\s+
                           \w+\s+ # normal
                           \w+\s+ # x86_64
                           (.+)$""", # file
                           re.X)
-def readUntilEmptyLine(i):
+cmd_split_pattern = re.compile(r"""
+"([^"]*)" |     # like "xxx xxx"
+'([^']*)' |     # like 'xxx xxx'
+((?:\\[ ]|\S)+) # like xxx\ xxx
+""", re.X)
+def cmd_split(s):
+    # shlex.split is slow, use a simple version, only consider most case
+    return [m.group(m.lastindex)
+            for m in cmd_split_pattern.finditer(s)]
+
+def read_until_empty_line(i):
     li = []
     while True:
         line = next(i).strip()
         if not line: return li
         li.append(line)
 
-cacheDir = None
 
-# def readFileList(path):
-#     with open(path) as f:
-#         return f.read().splitlines()
-
-def extractSwiftCompileCommandFromSwiftC(command, directory=None):
-    from subprocess import Popen, PIPE, STDOUT
+cache_dir = None
+async def extract_compile_command_from_swiftc(command, directory=None):
+    # from subprocess import Popen, PIPE, STDOUT
+    from asyncio.subprocess import create_subprocess_shell, PIPE, STDOUT
     import json
 
-    sp = Popen(command, shell=True, stdout=PIPE, stderr=STDOUT, cwd=directory)
+    # sp = Popen(command, shell=True, stdout=PIPE, stderr=STDOUT, cwd=directory)
+    sp = await create_subprocess_shell(command, stdout=PIPE, stderr=STDOUT, cwd=directory)
     items = []
 
-    if cacheDir is None:
-        # no cacheDir, don't replace filelist
-        _copyFileList = lambda p: p
+    if cache_dir is None:
+        # no cache_dir, don't replace filelist
+        _copy_filelist = lambda p: p
     else:
         # copy swiftc temp filelist
         import shutil
         copyed = set()
-        def _copyFileList(op):
-            np = os.path.join(cacheDir, os.path.basename(op))
+        def _copy_filelist(op):
+            np = os.path.join(cache_dir, os.path.basename(op))
             if op in copyed: return np
             if os.path.exists(op):
                 shutil.copy2(op, np)
@@ -55,18 +63,19 @@ def extractSwiftCompileCommandFromSwiftC(command, directory=None):
 
     while True:
       try:
-        line = sp.stdout.readline() # type: bytes
+        # swiftc may echo a filelist, and delete it when end. so need to save the filelist when it's alive and can't read all..
+        line = await sp.stdout.readline() # type: bytes
         if not line:
             break # EOF
 
         n = int(line) # ignore line non begin with a size number
         if n <= 0: continue
 
-        jsondata = sp.stdout.read(n)
+        jsondata = await sp.stdout.read(n)
         info = json.loads(jsondata) # type: dict
 
         cmd = info["command"]
-        cmdArgs = shlex.split(cmd)
+        cmdArgs = cmd_split(cmd)
         if not cmdArgs[0].endswith("swift"): continue
 
         primaryIndex = cmdArgs.index("-primary-file") + 1
@@ -75,7 +84,7 @@ def extractSwiftCompileCommandFromSwiftC(command, directory=None):
         def mayReplaceFileList(cmdArgs):
             try: # replace filelist
                 fileListIndex = cmdArgs.index("-filelist") + 1
-                saveListPath      = _copyFileList(cmdArgs[fileListIndex]) # type: list
+                saveListPath      = _copy_filelist(cmdArgs[fileListIndex]) # type: list
                 cmdArgs[fileListIndex] = saveListPath
             except ValueError:
                 pass
@@ -103,11 +112,11 @@ class XcodeLogParser(object):
         self._input = _input
         self._log = _logFunc
 
-    def parseCompileSwiftModule(self, line):
-        m = compileSwiftModule.match(line)
+    def parse_compile_swift_module(self, line):
+        m = compile_swift_module.match(line)
         if not m: return
 
-        li = readUntilEmptyLine(self._input)
+        li = read_until_empty_line(self._input)
         if not li: return
 
         command = li[-1] # type: str
@@ -122,15 +131,14 @@ class XcodeLogParser(object):
         # 这个命令可以运行获得一堆命令, 输出到Stderr, 如果吐出-filelist, 结束时就会删除
         ## 如果自己组装, 需要把里面的参数全部拆开
         # 还是直接运行吧
-        echo("CompileSwiftSources")
-        return extractSwiftCompileCommandFromSwiftC(command, directory)
+        return extract_compile_command_from_swiftc(command, directory)
 
-    def parseCompileSwift(self, line):
-        m = compileSwift.match(line)
+    def parse_compile_swift(self, line):
+        m = compile_swift.match(line)
         if not m: return
 
         echo(f"CompileSwift {m.group(1)}")
-        li = readUntilEmptyLine(self._input)
+        li = read_until_empty_line(self._input)
         if not li: return
 
         item = {"file": m.group(1), "command": li[-1]}
@@ -141,11 +149,17 @@ class XcodeLogParser(object):
         return item
 
     def parse(self):
+        from inspect import iscoroutine
+        import asyncio
         items = []
+        futures = []
+        def append(item):
+            if isinstance(item, dict): items.append(item)
+            else: items.extend(item)
 
         matcher = [
-            self.parseCompileSwiftModule,
-            # self.parseCompileSwift,
+            self.parse_compile_swift_module,
+            # self.parse_compile_swift,
         ]
         try:
             while True:
@@ -155,15 +169,24 @@ class XcodeLogParser(object):
                 for m in matcher:
                     item = m(line)
                     if item:
-                        if isinstance(item, dict): items.append(item)
-                        else: items.extend(item)
+                        if iscoroutine(item):
+                            futures.append( item )
+                        else: append(item)
                         break
         except StopIteration:
-            return items
+            pass
+
+        if len(futures) > 0:
+            echo("waiting... ")
+            for item in asyncio.get_event_loop().run_until_complete( asyncio.gather(*futures) ):
+                append(item)
+
+        return items
 
 def dump_jsonDataBase(items, output):
     import json
-    json.dump(items, output, ensure_ascii=False, check_circular=False)
+    # pretty print, easy to read with editor. compact save little size. only about 0.2%
+    json.dump(items, output, ensure_ascii=False, check_circular=False, indent="\t")
 
 def main():
     import argparse
@@ -176,9 +199,9 @@ def main():
     else: a.input = open(a.input, "r")
     if a.output == "-": a.output = sys.stdout
     else:
-        global cacheDir;
-        cacheDir = os.path.join( os.path.dirname(os.path.abspath(a.output)), os.path.basename(a.output) + "cache")
-        os.makedirs(cacheDir, exist_ok=True)
+        global cache_dir;
+        cache_dir = os.path.join( os.path.dirname(os.path.abspath(a.output)), os.path.basename(a.output) + "cache")
+        os.makedirs(cache_dir, exist_ok=True)
         a.output = open(a.output, "w")
 
     items = XcodeLogParser(a.input, echo).parse()
