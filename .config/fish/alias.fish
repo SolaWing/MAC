@@ -64,10 +64,10 @@ function gca
 	git commit -a $argv
 end
 function gcm
-	git commit --amend -C head $argv
+	git commit --amend --no-edit $argv
 end
 function gcam
-	git commit -a --amend -C head $argv
+	git commit -a --amend --no-edit $argv
 end
 function gco
 	git checkout $argv

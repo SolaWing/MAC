@@ -35,7 +35,7 @@ def main():
             raise SystemExit(e)
     with outfile:
         s = json.dumps(obj,  sort_keys=False, ensure_ascii=False,
-                  indent=4, separators=(',', ': '))
+                  indent="\t", separators=(',', ': '))
         outfile.write(s)
         outfile.write('\n')
 
