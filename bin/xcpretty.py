@@ -71,7 +71,8 @@ async def extract_compile_command_from_swiftc(command, directory=None):
         n = int(line) # ignore line non begin with a size number
         if n <= 0: continue
 
-        jsondata = await sp.stdout.read(n)
+        # read(n)可能没读取n这么多字节
+        jsondata = await sp.stdout.readexactly(n)
         info = json.loads(jsondata) # type: dict
 
         cmd = info["command"]
