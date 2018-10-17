@@ -145,7 +145,7 @@ def regVariable(debugger, command, result, internal_dict):
 
 def continueTo(debugger, command, result, internal_dict):
     """
-    short for thread until -f <currentFrame> -- <linenum>. or passthrough to thread until
+    short for thread until -f <currentFrame> -- $linenum. or passthrough to thread until
     :type debugger: lldb.SBDebugger
     :type command: str
     :type result: lldb.SBCommandReturnObject
@@ -153,7 +153,7 @@ def continueTo(debugger, command, result, internal_dict):
     """
     r = re.match(r'\s*(?:(0x[0-9a-fA-F]+)|(\d+))', command)
     if r:
-        frame = getSelectedFrame(debugger) #!! frame = SBFrame()
+        frame = getSelectedFrame(debugger) # type: SBFrame
         fid = frame.GetFrameID()
         if r.group(1):
             s = "thread until -f %d -a %s"%(fid, r.group(1))
@@ -183,17 +183,37 @@ def printToFile(debugger, command, result, internal_dict):
     debugger.HandleCommand(command)
     debugger.SetOutputFileHandle(origin_file, False)
 
+def step_func(debugger, command, result, internal_dict):
+    thread = debugger.GetSelectedTarget().GetProcess().GetSelectedThread()
+
+    start_num_frames = thread.GetNumFrames()
+    if start_num_frames == 0:
+        return
+
+    while True:
+        thread.StepInstruction(0)
+        if thread.GetNumFrames() != start_num_frames:
+            stream = lldb.SBStream()
+            thread.GetStatus(stream)
+            description = stream.GetData()
+
+            print >>result, "Call stack depth changed %d -> %d" % (start_num_frames, thread.GetNumFrames())
+            print >>result, description,
+
+            break
+
 def __lldb_init_module(debugger, internal_dict):
     """
     :type debugger: lldb.SBDebugger
     :type internal_dict: dict
     """
     pymap = {
-        "d":"customCommand.disassemble",
-        "fm":"customCommand.findModule",
-        "fr":"customCommand.regVariable",
-        "to":"customCommand.continueTo",
-        ">" : "customCommand.printToFile",
+        "d":  "customCommand.disassemble",
+        "fm": "customCommand.findModule",
+        "fr": "customCommand.regVariable",
+        "to": "customCommand.continueTo",
+        ">":  "customCommand.printToFile",
+        "sf": "customCommand.step_func",
     }
     for k, v in pymap.iteritems():
         s = 'command script add -f %s %s'%(v,k)

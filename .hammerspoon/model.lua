@@ -1,22 +1,25 @@
---[[
-hsupervisor_keys = {{"alt"}, "space"}
+hsupervisor_keys = {{}, "F12"}
 hshelp_keys = {{}, "F1"}
 hs.loadSpoon("ModalMgr")  -- Modal wrapper
+
 local M = spoon.ModalMgr
+-- fix deactivateAll, inner use ipairs. active_list is {name: obj} pairs
+function M:deactivateAll()
+    self:deactivate(table.keys(self.active_list))
+end
 M.supervisor:bind({}, "escape", "Reset Modal Environment", function() M.supervisor:exit() end)
+
+local function exitAll()
+    M:deactivateAll()
+    M.supervisor:exit()
+end
 
 local function exitAfter(f)
     return function (...)
         f(...)
-        M:deactivateAll()
-        M.supervisor:exit()
+        exitAll()
     end
 end
-
--- reload
-hs.hotkey.bind(leaderModifier, 'R', "Reload Configuration", function()
-    hs.reload()
-end)
 
 -- showWindows
 local showWindows = exitAfter(function ()
@@ -35,7 +38,6 @@ M.supervisor:bind({}, "A", "Enter AppM Environment", function()
 end)
 local cmodal = M.modal_list["appM"]
 
-
 cmodal:bind('', 'escape', 'Deactivate appM',   function() M:deactivate({"appM"}) end)
 cmodal:bind('', 'F1',     'Toggle Cheatsheet', function() M:toggleCheatsheet() end)
 
@@ -53,14 +55,11 @@ for _, v in ipairs(hsapp_list) do
         if located_name then
             cmodal:bind('', v.key, located_name, exitAfter(function()
                 hs.application.launchOrFocusByBundleID(v.id)
-                M:deactivate({"appM"})
             end))
         end
     elseif v.name then
         cmodal:bind('', v.key, v.name, exitAfter(function()
             hs.application.launchOrFocus(v.name)
-            M:deactivate({"appM"})
         end))
     end
 end
-]]
