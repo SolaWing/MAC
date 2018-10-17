@@ -14,6 +14,7 @@ HOME_FILES=(
     .jshintrc
     .ctags.d
     .vim
+    .hammerspoon
     lldb_script
     bin
     )

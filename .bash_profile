@@ -9,6 +9,7 @@ export HISTSIZE=9999
 
 export JAVA_HOME="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"
 #export JAVA_VERSION=1.6
+eval "$(rbenv init -)" # load rbenv
 
 alias sudo='sudo ' #space end alias will try to expand after alias
 alias xargs='xargs ' #space end alias will try to expand after alias
