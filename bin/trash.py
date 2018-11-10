@@ -15,6 +15,8 @@ def main():
         return
 
     print("will remove:\n" + "\n".join(to_remove))
+
+    # js script has bugs, can't delete multiple file and folder correctly, so use osascript.
     osascript = """
 on run argv
     set toDelete to {}
