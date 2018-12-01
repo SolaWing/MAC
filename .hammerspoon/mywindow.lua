@@ -39,4 +39,21 @@ function win:stepSize(width, height)
     cwin:setFrame(wf)
 end
 
+function win:moveToUnit(unit)
+    local cwin = self == win and hs.window.focusedWindow() or self
+    if not cwin then
+        hs.alert.show("No focused window!")
+    end
+    -- 新15寸电脑上有Bug，原因未知。这样没法用了啊。
+    -- cwin:moveToUnit(unit, 0)
+    local cscreen = cwin:screen()
+    local cres = cscreen:fullFrame()
+    local wf = hs.geometry(unit)
+    wf.w = wf.w * cres.w
+    wf.h = wf.h * cres.h
+    wf.x = wf.x * cres.w + cres.x
+    wf.y = wf.y * cres.h + cres.y
+    cwin:setFrame(wf)
+end
+
 return win

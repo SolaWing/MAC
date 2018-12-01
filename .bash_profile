@@ -98,7 +98,6 @@ bind '"\ek":history-search-backward'
 rm() {
     ~/bin/trash.py "$@"
 }
-
 alias trm='/bin/rm'
 
 clearTrash() {(

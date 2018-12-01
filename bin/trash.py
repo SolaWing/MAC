@@ -8,7 +8,7 @@ import os.path, subprocess, sys
 def main():
     # finder only accept abspath
     to_remove = [
-        os.path.abspath(p) for p in sys.argv[1:] if os.path.lexists(p)
+        os.path.abspath(p) for p in sys.argv[1:] if os.path.lexists(p) # lexists check can also reject flags
     ]
     if len(to_remove) < 1:
         print("nothing to remove.")
@@ -28,13 +28,14 @@ end run
     """
 
     try:
-        from subprocess import DEVNULL  # py3k
+        from subprocess import DEVNULL  # py3
     except ImportError:
         DEVNULL = open(os.devnull, 'wb')
 
-    p = subprocess.Popen(
-        ["osascript", '-'] + to_remove, stdin=subprocess.PIPE, stdout=DEVNULL)
+    p = subprocess.Popen(["osascript", '-'] + to_remove, stdin=subprocess.PIPE, stdout=DEVNULL)
     p.communicate(osascript)
+
+    print("finish!")
 
 
 if __name__ == "__main__":
