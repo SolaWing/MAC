@@ -32,6 +32,8 @@ def read_until_empty_line(i):
         if not line: return li
         li.append(line)
 
+def extract_swift_files_from_swiftc(command):
+    return [a for a in cmd_split(command) if a.endswith(".swift")]
 
 cache_dir = None
 async def extract_compile_command_from_swiftc(command, directory=None):
@@ -125,14 +127,17 @@ class XcodeLogParser(object):
             echo("Error: ================= Can't found swiftc\n" + command)
             return
 
-        # module = {}
+        module = {}
         directory = next( (i[len("cd "):] for i in li if i.startswith("cd ")), None )
-        # if directory: module["directory"] = directory
+        if directory: module["directory"] = directory
+        module["command"] = command
+        module["files"] = extract_swift_files_from_swiftc(command)
+        return module
 
         # 这个命令可以运行获得一堆命令, 输出到Stderr, 如果吐出-filelist, 结束时就会删除
         ## 如果自己组装, 需要把里面的参数全部拆开
         # 还是直接运行吧
-        return extract_compile_command_from_swiftc(command, directory)
+        # return extract_compile_command_from_swiftc(command, directory)
 
     def parse_compile_swift(self, line):
         m = compile_swift.match(line)
@@ -191,6 +196,7 @@ def dump_database(items, output):
 
 def merge_database(items, database_path):
     import json
+    # 根据ident(file属性)，增量覆盖更新
     def identifier(item):
         if isinstance(item, dict):
             return item.get("file")
