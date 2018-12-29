@@ -3,3 +3,7 @@
 /lldb_script/dissemble
 /.config/fish/fishd*
 /.config/fish/fish_history
+/.config/fish/fish_variables
+/.config/oni/
+/.ctags.d/
+/.config/alacritty/
