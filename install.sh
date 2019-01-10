@@ -30,7 +30,7 @@ function install_brew () {
 
     other_packages=(
         '--HEAD universal-ctags/universal-ctags/universal-ctags'
-        '--HEAD d12frosted/emacs-plus/emacs-plus --without-librsvg --without-imagemagick@6'
+        # '--HEAD d12frosted/emacs-plus/emacs-plus --without-librsvg --without-imagemagick@6'
     )
 
     set -x
@@ -48,7 +48,8 @@ function install_brew_app () {
 
 function install_pip3 () {
     packages=(
-        pip setuptools neovim ipython
+        pip setuptools
+        neovim ipython
         virtualenv
         vprof # visual profile packages
     )
@@ -71,6 +72,7 @@ if (($#==0)); then
     install -- install all
     install_brew
     install_brew_app
+    install_pip3
     link_file
     '
 else
