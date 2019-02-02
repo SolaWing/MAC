@@ -26,9 +26,8 @@
         la = log --simplify-merges
 	stat-commit = shortlog --no-merges
 	stat-line = !sh ~/bin/git-stat-line.sh
-	# byte dance
-	rv = "!f() { git push origin \"${1:-HEAD}:refs/for/${2:-master}%${3:-r=liuwanlin,r=qihongye,r=liyuguo.jeffrey,r=zhuchao.03,r=chengzhipeng,r=zhaochen.09,r=lichen.arthur,r=supeng.charlie,r=ci-ee,r=dongzhao.stone}\"; }; f"
-
+	# byte dance gerrit review
+	rv = "!f() { git push origin \"${1:-HEAD}:refs/for/${2:-master}%${3:-r=liuwanlin,r=qihongye,r=liyuguo.jeffrey,r=kongkaikai,r=chengzhipeng,r=zhaochen.09,r=lichen.arthur,r=supeng.charlie,r=ci-ee,r=dongzhao.stone}\"; }; f"
 [push]
 	default = simple
 [merge]
