@@ -14,13 +14,13 @@ function install_brew () {
         fzf
         fish
         neovim
-        the_silver_searcher
         ripgrep
         fd
         clang-format
         laurent22/massren/massren # file rename util
         tmux
         httpie
+        graphviz
 
         mitmproxy
         node
@@ -33,7 +33,7 @@ function install_brew () {
         # '--HEAD d12frosted/emacs-plus/emacs-plus --without-librsvg --without-imagemagick@6'
     )
 
-    set -x
+    set -x # log command
     # print_args "${packages[@]}"
     brew install "${packages[@]}"
     for p in "${other_packages[@]}"; do

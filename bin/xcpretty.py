@@ -21,7 +21,11 @@ cmd_split_pattern = re.compile(r"""
 """, re.X)
 def cmd_split(s):
     # shlex.split is slow, use a simple version, only consider most case
-    return [m.group(m.lastindex)
+    def extract(m):
+        if m.lastindex == 3: # \ escape version. remove it
+            return m.group(m.lastindex).replace("\\ ", " ")
+        return m.group(m.lastindex)
+    return [extract(m)
             for m in cmd_split_pattern.finditer(s)]
 
 def read_until_empty_line(i):
