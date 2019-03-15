@@ -120,6 +120,7 @@ def dump_database(items, output):
 
 def merge_database(items, database_path):
     import json
+    #  TODO: swiftc模块的增量更新
     # 根据ident(file属性)，增量覆盖更新
     def identifier(item):
         if isinstance(item, dict):
@@ -146,6 +147,7 @@ def merge_database(items, database_path):
                     if new_item: return new_item
             return old_item
 
+        # 旧item中不变的, 以及被更新的，和新item中新添加的
         final = [get_new_item(item) for item in old_items]
         final.extend( item for item in items if identifier(item) not in dealed )
 

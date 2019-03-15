@@ -1,6 +1,6 @@
 -- http://www.hammerspoon.org/docs/index.html
 hs.hotkey.alertDuration = 0.4
-leaderModifier = {"cmd", "shift", "ctrl"}
+leaderModifier = {"ctrl", "alt"}
 require "myext"
 -- require "model"
 -- win = require "mywindow"
@@ -8,6 +8,7 @@ require "myext"
 hs.hotkey.bind(leaderModifier, 'R', "Reload Configuration", function()
     hs.reload()
 end)
+
 
 local showWindows = function ()
     hs.hints.windowHints()  -- window change hints
@@ -29,15 +30,14 @@ windowMode:bind('',      'H', 'Move Leftward',    function() WinWin:stepMove("le
 windowMode:bind('',      'L', 'Move Rightward',   function() WinWin:stepMove("right") end,                            nil, function() WinWin:stepMove("right") end)
 windowMode:bind('',      'K', 'Move Upward',      function() WinWin:stepMove("up") end,                               nil, function() WinWin:stepMove("up") end)
 windowMode:bind('',      'J', 'Move Downward',    function() WinWin:stepMove("down") end,                             nil, function() WinWin:stepMove("down") end)
-windowMode:bind('shift', 'H', 'Minus Width',      function() WinWin:stepResize("left") end,                           nil, function() WinWin:stepResize("left") end)
-windowMode:bind('shift', 'L', 'Plus Width',       function() WinWin:stepResize("right") end,                          nil, function() WinWin:stepResize("right") end)
-windowMode:bind('shift', 'K', 'Minus Height',     function() WinWin:stepResize("up") end,                             nil, function() WinWin:stepResize("up") end)
-windowMode:bind('shift', 'J', 'Plus Height',      function() WinWin:stepResize("down") end,                           nil, function() WinWin:stepResize("down") end)
-windowMode:bind({'shift', 'alt'},  'H', 'Plus Left Width',  function() WinWin:stepResize("right"); WinWin:stepMove("left") end, nil, function() WinWin:stepResize("right"); WinWin:stepMove("left") end)
-windowMode:bind({'shift', 'alt'},  'L', 'Minus Left Width', function() WinWin:stepResize("left"); WinWin:stepMove("right") end, nil, function() WinWin:stepResize("left"); WinWin:stepMove("right") end)
-windowMode:bind({'shift', 'alt'},  'K', 'Plus Top Height',  function() WinWin:stepResize("down"); WinWin:stepMove("up") end,    nil, function() WinWin:stepResize("down"); WinWin:stepMove("up") end)
-windowMode:bind({'shift', 'alt'},  'J', 'Minus Top Height', function() WinWin:stepResize("up"); WinWin:stepMove("down") end,    nil, function() WinWin:stepResize("up"); WinWin:stepMove("down") end)
-
+windowMode:bind('alt', 'H', 'Minus Width',      function() WinWin:stepResize("left") end,                           nil, function() WinWin:stepResize("left") end)
+windowMode:bind('alt', 'L', 'Plus Width',       function() WinWin:stepResize("right") end,                          nil, function() WinWin:stepResize("right") end)
+windowMode:bind('alt', 'K', 'Minus Height',     function() WinWin:stepResize("up") end,                             nil, function() WinWin:stepResize("up") end)
+windowMode:bind('alt', 'J', 'Plus Height',      function() WinWin:stepResize("down") end,                           nil, function() WinWin:stepResize("down") end)
+windowMode:bind('shift',  'H', 'Plus Left Width',  function() WinWin:stepResize("right"); WinWin:stepMove("left") end, nil, function() WinWin:stepResize("right"); WinWin:stepMove("left") end)
+windowMode:bind('shift',  'L', 'Minus Left Width', function() WinWin:stepResize("left"); WinWin:stepMove("right") end, nil, function() WinWin:stepResize("left"); WinWin:stepMove("right") end)
+windowMode:bind('shift',  'K', 'Plus Top Height',  function() WinWin:stepResize("down"); WinWin:stepMove("up") end,    nil, function() WinWin:stepResize("down"); WinWin:stepMove("up") end)
+windowMode:bind('shift',  'J', 'Minus Top Height', function() WinWin:stepResize("up"); WinWin:stepMove("down") end,    nil, function() WinWin:stepResize("up"); WinWin:stepMove("down") end)
 windowMode:bind('',      'A',     'Lefthalf of Screen',       function() hs.window.focusedWindow():moveToUnit({0,   0,   0.5, 1})   end)
 windowMode:bind('',      'D',     'Righthalf of Screen',      function() hs.window.focusedWindow():moveToUnit({0.5, 0,   0.5, 1})   end)
 windowMode:bind('',      'W',     'Uphalf of Screen',         function() hs.window.focusedWindow():moveToUnit({0,   0,   1,   0.5}) end)

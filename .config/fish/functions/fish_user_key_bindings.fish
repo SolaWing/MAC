@@ -6,7 +6,7 @@ function fish_user_key_bindings
         bind \ej history-search-forward
         bind \ek history-search-backward
         bind \c] forward-jump
-        bind \ee my_edit_line
+        # bind \ee my_edit_line
     else
         for m in default insert visual
             bind -M $m \eh backward-char
@@ -14,7 +14,7 @@ function fish_user_key_bindings
             bind -M $m \ej history-search-forward
             bind -M $m \ek history-search-backward
             bind -M $m \c] forward-jump
-            bind -M $m \ee my_edit_line
+            # bind -M $m \ee my_edit_line
         end
     end
     fzf_key_bindings
