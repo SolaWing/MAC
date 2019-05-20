@@ -14,7 +14,7 @@ function la
 	ls -lAh $argv
 end
 function md
-	mkdir $argv
+	mkdir -p $argv
 end
 function mtab
 	open -b org.vim.MacVim $argv

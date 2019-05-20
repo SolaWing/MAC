@@ -10,6 +10,27 @@ hs.hotkey.bind(leaderModifier, 'R', "Reload Configuration", function()
 end)
 
 
+-- fix: cross screen focus correct window
+function hs.window:focus()
+  local app=self:application()
+  self:becomeMain()
+  app:_bringtofront()
+  -- if app:bundleID()=='com.apple.finder' then --workaround for the desktop taking over
+    -- it may look like this should ideally go inside :becomeMain(), but the problem is actually
+    -- triggered by :_bringtofront(), so the workaround belongs here
+    if desktopFocusWorkaroundTimer then desktopFocusWorkaroundTimer:stop() end
+    desktopFocusWorkaroundTimer=hs.timer.doAfter(0.05,function()
+      -- 0.3s comes from https://github.com/Hammerspoon/hammerspoon/issues/581
+      -- it'd be slightly less ugly to use a "space change completed" callback (as per issue above) rather than
+      -- a crude timer, althought that route is a lot more complicated
+      self:becomeMain()
+      desktopFocusWorkaroundTimer=nil --cleanup the timer
+    end)
+    self:becomeMain()
+  -- end
+  return self
+end
+
 local showWindows = function ()
     hs.hints.windowHints()  -- window change hints
 end
