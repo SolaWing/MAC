@@ -1,140 +1,141 @@
+# https://github.com/fish-shell/fish-shell/issues/828
 function ...
     cd ../..
 end
 function ....
     cd ../../..
 end
-function l
+function l --wraps 'ls -Ah'
     ls -Ah $argv
 end
-function ll
+function ll --wraps 'ls -lh'
 	ls -lh $argv
 end
-function la
+function la --wraps 'ls -lAh'
 	ls -lAh $argv
 end
-function md
+function md --wraps 'mkdir -p'
 	mkdir -p $argv
 end
-function mtab
+function mtab --wraps 'open -b org.vim.MacVim'
 	open -b org.vim.MacVim $argv
 end
-function py
+function py --wraps 'python'
 	python $argv
 end
-function py3
+function py3 --wraps 'python3'
 	python3 $argv
 end
-function vim
+function vim --wraps 'mvim'
 	mvim $argv
 end
-function bvim
+function bvim --wraps 'nvim -b --noplugin'
 	nvim -b --noplugin $argv
 end
-function v
+function v --wraps 'nvim'
 	nvim $argv
 end
-function o
+function o --wraps 'open'
 	open $argv
 end
-function tp
+function tp --wraps '/Applications/TexturePacker.app/Contents/MacOS/TexturePacker'
 	/Applications/TexturePacker.app/Contents/MacOS/TexturePacker $argv
 end
-function em
+function em --wraps 'open -a Emacs'
 	open -a Emacs $argv
 end
-function pause
+function pause --wraps 'kill -s SIGSTOP'
 	kill -s SIGSTOP $argv
 end
-function resume
+function resume --wraps 'kill -s SIGCONT'
 	kill -s SIGCONT $argv
 end
 
 # git alias
-function ga
+function ga --wraps 'git add'
 	git add $argv
 end
-function gbr
+function gbr --wraps 'git branch -vv'
 	git branch -vv $argv
 end
-function gc
+function gc --wraps 'git commit'
 	git commit $argv
 end
-function gca
+function gca --wraps 'git commit -a'
 	git commit -a $argv
 end
-function gcm
+function gcm --wraps 'git commit --amend --no-edit'
 	git commit --amend --no-edit $argv
 end
-function gcam
+function gcam --wraps 'git commit -a --amend --no-edit'
 	git commit -a --amend --no-edit $argv
 end
-function gco
+function gco --wraps 'git checkout'
 	git checkout $argv
 end
-function gdt
+function gdt --wraps 'git difftool'
 	git difftool $argv
 end
-function gdtm
+function gdtm --wraps 'git difftool --diff-filter=MTU'
 	git difftool --diff-filter=MTU $argv
 end
-function gd
+function gd --wraps 'git diff'
 	git diff $argv
 end
-function gf
+function gf --wraps 'git fetch'
 	git fetch $argv
 end
-function gp
+function gp --wraps 'git pull'
 	git pull $argv
 end
-function gpr
+function gpr --wraps 'git pull --rebase'
 	git pull --rebase $argv
 end
-function gl
+function gl --wraps 'git log'
 	git log $argv
 end
-function gll
+function gll --wraps 'git ls-files'
 	git ls-files $argv
 end
-function glo
+function glo --wraps 'git log --graph --oneline'
 	git log --graph --oneline $argv
 end
-function gls
+function gls --wraps 'git log --stat'
 	git log --stat $argv
 end
-function gldel
+function gldel --wraps 'git log --diff-filter=D --summary'
 	git log --diff-filter=D --summary $argv
 end
-function gm
+function gm --wraps 'git merge'
 	git merge $argv
 end
-function gmt
+function gmt --wraps 'git mergetool'
 	git mergetool $argv
 end
-function gs
+function gs --wraps 'git status'
 	git status $argv
 end
-function gsub
+function gsub --wraps 'git submodule'
 	git submodule $argv
 end
-function gsubu
+function gsubu --wraps 'git submodule update --init --recursive'
 	git submodule update --init --recursive $argv
 end
-function greset
+function greset --wraps 'git reset'
 	git reset $argv
 end
-function grebase
+function grebase --wraps 'git rebase'
 	git rebase $argv
 end
-function gstash
+function gstash --wraps 'git stash'
 	git stash $argv
 end
 
-function trm
+function trm --wraps '/bin/rm'
 	/bin/rm $argv
 end
 
-function rm
+function rm --wraps /bin/rm
     if contains -- -f $argv
         /bin/rm $argv
     else
