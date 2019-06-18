@@ -7,7 +7,7 @@ if ARGV.empty?
   HELP
   exit 0
 end
-$0 = ARGV.shift
+$PROGRAM_NAME = ARGV.shift
 Dir.chdir(File.expand_path('../', $PROGRAM_NAME)) do
   require 'bundler/setup'
   # help debuger
