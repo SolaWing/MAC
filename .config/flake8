@@ -1,5 +1,7 @@
 [flake8]
 ignore = E501, E221, E731,
+    # multiple import in one line
+    E401
     # whitespace
     E201, E202, E251, E261, E306, E272,
     # one line
