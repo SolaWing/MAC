@@ -43,15 +43,19 @@ function install_brew () {
 }
 
 function install_brew_app () {
-    brew cask install bitbar macvim
+    apps=(
+        bitbar macvim firefox gitup hammerspoon
+    )
+    brew cask install "${apps[@]}"
 }
 
 function install_pip3 () {
     packages=(
         pip setuptools
-        neovim ipython
+        neovim
+        ipython
         virtualenv
-        vprof # visual profile packages
+        # vprof # visual profile packages
     )
     pip3 install -U "${packages[@]}"
 }
