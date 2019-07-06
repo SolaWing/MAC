@@ -26,6 +26,9 @@ end
 function py3 --wraps 'python3'
 	python3 $argv
 end
+function b --wraps 'bundle exec'
+    bundle exec $argv
+end
 function vim --wraps 'mvim'
 	mvim $argv
 end
