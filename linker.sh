@@ -12,6 +12,7 @@ HOME_FILES=(
     .tmux.conf
     .style.yapf
     .jshintrc
+    .eslintrc.yml
     .ctags.d
     .vim
     .hammerspoon
