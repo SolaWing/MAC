@@ -40,7 +40,7 @@ def attr(s, *attributes):
     """
     add terminal attributes surround s, and return it
     if attributes is Clear, remove attribute in s
-    :type s: str
+    :param str s: the string content
     """
     if len(attributes) == 0: return s # do nothing if not pass attr
     if attributes[0].val == 0:

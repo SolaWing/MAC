@@ -27,7 +27,7 @@
 	stat-commit = shortlog --no-merges
 	stat-line = !sh ~/bin/git-stat-line.sh
 	# byte dance gerrit review
-    rv = "!f() { git push origin \"${1:-HEAD}:refs/for/${2:-${REMOTE:-master}}%${RV}${RV:+,}${3:-r=liuwanlin,r=qihongye,r=liyuguo.jeffrey,r=kongkaikai,r=chengzhipeng,r=zhaochen.09,r=lichen.arthur,r=supeng.charlie,r=ci-ee,r=dongzhao.stone,r=cuiguilin}\"; }; f"
+    rv = "!f() { git push origin \"${1:-HEAD}:refs/for/${2:-${REMOTE:-master}}%${RV}${RV:+,}${3:-r=liuwanlin,r=qihongye,r=kongkaikai,r=zhaochen.09,r=lichen.arthur,r=supeng.charlie,r=ci-ee,r=dongzhao.stone,r=cuiguilin}\"; }; f"
 [push]
 	default = simple
 [merge]
