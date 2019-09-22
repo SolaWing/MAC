@@ -38,7 +38,11 @@ def read_until_empty_line(i):
 def extract_swift_files_from_swiftc(command):
     # realpath解决了唯一性问题，但是swiftc好像要求传递的参数和命令行的一致...
     # TODO：如果用相对路径，有current directory的问题
-    return [os.path.realpath(a) for a in cmd_split(command) if a.endswith(".swift")]
+    args = cmd_split(command)
+    files = [os.path.realpath(a) for a in args if a.endswith(".swift")]
+    # .SwiftFileList begin with a @ in command
+    fileLists = [a[1:] for a in args if a.endswith(".SwiftFileList")]
+    return (files, fileLists)
 
 class XcodeLogParser(object):
     def __init__(self, _input, _logFunc):
@@ -61,7 +65,9 @@ class XcodeLogParser(object):
         directory = next( (i[len("cd "):] for i in li if i.startswith("cd ")), None )
         if directory: module["directory"] = directory
         module["command"] = command
-        module["files"] = extract_swift_files_from_swiftc(command)
+        files = extract_swift_files_from_swiftc(command)
+        module["files"] = files[0]
+        module["fileLists"] = files[1]
         return module
 
     def parse_compile_swift(self, line):

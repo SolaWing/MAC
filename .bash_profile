@@ -9,7 +9,6 @@ export HISTSIZE=9999
 
 export JAVA_HOME="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"
 #export JAVA_VERSION=1.6
-eval "$(rbenv init -)" # load rbenv
 
 alias sudo='sudo ' #space end alias will try to expand after alias
 alias xargs='xargs ' #space end alias will try to expand after alias
@@ -141,5 +140,7 @@ if [ -f /usr/local/Cellar/bash-completion/1.3/etc/bash_completion ]; then
 fi
 
 eval `/usr/libexec/path_helper -s` # will remove duplicates
+
+eval "$(rbenv init -)" # load rbenv
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
