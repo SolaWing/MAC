@@ -71,7 +71,7 @@ def disassemble(debugger, command, result, internal_dict):
                             index += int(startOffset, 0)
                             if index < 0: index = 0
                             if index >= lenAddr : index = 0
-                        except Exception, e:
+                        except Exception as e:
                             pass
                         start = "-s %s"%addr[index]
 
@@ -99,7 +99,7 @@ def findModule(debugger, command, result, internal_dict):
     :type result: lldb.SBCommandReturnObject
     :type internal_dict: dict
     """
-    print command
+    print(command)
     if re.match('^$', command):
         debugger.HandleCommand('target modules list')
     else:
@@ -107,7 +107,7 @@ def findModule(debugger, command, result, internal_dict):
         # num : the module index 
         # other_argu : will pass to 'target modules lookup'
         r = re.match(r'\s*(\S+)\s*(\d+)?\s*(.*)', command)
-        print r.groups()
+        print(r.groups())
         if r:
             keyword, moduleIndex, other_argu = r.groups()
             modulePath = ''
@@ -122,7 +122,7 @@ def findModule(debugger, command, result, internal_dict):
                 if m:
                     modulePath = m.GetPlatformFileSpec().fullpath #!!modulePath = ""
             command = 'target modules lookup -Ar -n %s %s "%s"'%(keyword, other_argu, modulePath)
-            print command
+            print(command)
             debugger.HandleCommand(command)
         else:
             debugger.HandleCommand('target modules list')
@@ -159,7 +159,7 @@ def continueTo(debugger, command, result, internal_dict):
             s = "thread until -f %d -a %s"%(fid, r.group(1))
         else:
             s = "thread until -f %d -- %s"%(fid, r.group(2))
-        print s
+        print(s)
         debugger.HandleCommand(s)
     else:
         debugger.HandleCommand("thread until %s"%(command))
@@ -197,8 +197,8 @@ def step_func(debugger, command, result, internal_dict):
             thread.GetStatus(stream)
             description = stream.GetData()
 
-            print >>result, "Call stack depth changed %d -> %d" % (start_num_frames, thread.GetNumFrames())
-            print >>result, description,
+            print("Call stack depth changed %d -> %d" % (start_num_frames, thread.GetNumFrames()), file=result)
+            print(description, file=result)
 
             break
 
