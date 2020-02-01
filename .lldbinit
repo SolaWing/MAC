@@ -8,6 +8,6 @@ com alias we  watch    set      expr
 com alias o   thread   step-out
 
 ## this will complain error
-#com alias fr frame var -r
-#settings se stop-disassembly-count 1
+# com alias fr frame var -r
+# settings se stop-disassembly-count 1
 command script import /usr/local/opt/chisel/libexec/fblldb.py

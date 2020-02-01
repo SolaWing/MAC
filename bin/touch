@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+for file; do
+    if [[ "$file" = */* ]]; then
+        mkdir -p "${file%/*}";
+    fi;
+
+    touch "$file";
+done

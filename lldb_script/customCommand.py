@@ -215,7 +215,7 @@ def __lldb_init_module(debugger, internal_dict):
         ">":  "customCommand.printToFile",
         "sf": "customCommand.step_func",
     }
-    for k, v in pymap.iteritems():
+    for k, v in pymap.items():
         s = 'command script add -f %s %s'%(v,k)
         debugger.HandleCommand(s)
 
