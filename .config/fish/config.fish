@@ -16,7 +16,7 @@ set -xg FZF_DEFAULT_OPTS ' --bind="alt-j:down,alt-k:up,alt-h:backward-char,alt-l
 set -xg MANPAGER 'nvim +Man!'
 set -xg HOMEBREW_NO_AUTO_UPDATE 1
 
-set -xg RUBYOPT '--jit'
+set -xg RUBYOPT '--jit -W:no-deprecated -W:no-experimental'
 
 function fish_prompt
     set_color green
