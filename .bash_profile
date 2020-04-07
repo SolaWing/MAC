@@ -81,6 +81,7 @@ alias ssi='svn ps svn:ignore -F' # ignoreFile(- stdin) path [path]
 alias sgi='svn pg svn:ignore ' # path [path]
 alias sd='svn diff'
 
+eval "$(rbenv init -)" # load rbenv
 # interactive shell will continue
 [[ $- == *i* ]] || return
 
@@ -141,6 +142,5 @@ fi
 
 eval `/usr/libexec/path_helper -s` # will remove duplicates
 
-eval "$(rbenv init -)" # load rbenv
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"

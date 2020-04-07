@@ -7,6 +7,7 @@ if ARGV.empty?
   HELP
   exit 0
 end
+
 $PROGRAM_NAME = ARGV.shift
 Dir.chdir(File.expand_path('../', $PROGRAM_NAME)) do
   require 'bundler/setup'
@@ -16,4 +17,5 @@ Dir.chdir(File.expand_path('../', $PROGRAM_NAME)) do
   rescue LoadError
   end
 end
+$DEVELOP = true
 load $PROGRAM_NAME

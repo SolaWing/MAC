@@ -5,9 +5,10 @@ require "myext"
 -- require "model"
 -- win = require "mywindow"
 
-hs.hotkey.bind(leaderModifier, 'R', "Reload Configuration", function()
-    hs.reload()
-end)
+-- manual reload
+-- hs.hotkey.bind(leaderModifier, 'R', "Reload Configuration", function()
+--     hs.reload()
+-- end)
 
 
 -- fix: cross screen focus correct window

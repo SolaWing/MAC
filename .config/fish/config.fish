@@ -12,11 +12,13 @@ set -xg GREP_COLOR  '1;32'
 set -xg HISTCONTROL  ignoreboth:erasedups		# for 'ignoreboth': ignore duplicates and /^\s/
 set -xg HISTSIZE  9999
 set -xg JAVA_HOME  "/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"
-set -xg FZF_DEFAULT_OPTS ' --bind="alt-j:down,alt-k:up,alt-h:backward-char,alt-l:forward-char,alt-space:jump,`:jump-accept" --color="pointer:15" --exact'
+set -xg FZF_DEFAULT_OPTS ' --bind="alt-j:down,alt-k:up,alt-h:backward-char,alt-l:forward-char,alt-space:jump,`:jump-accept" --color="pointer:15"'
+# --exact'
 set -xg MANPAGER 'nvim +Man!'
 set -xg HOMEBREW_NO_AUTO_UPDATE 1
 
-set -xg RUBYOPT '--jit -W:no-deprecated -W:no-experimental'
+# set -xg RUBYOPT '--jit -W:no-deprecated -W:no-experimental'
+# set -xg CP_CACHE_DIR $HOME/Library/Caches/CocoaPods/1.8.4
 
 function fish_prompt
     set_color green
