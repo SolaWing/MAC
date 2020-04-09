@@ -1,4 +1,4 @@
 ---
 reporters:
 - require_not_found
-# - typecheck:typed
+- typecheck:typed

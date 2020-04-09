@@ -1,4 +1,6 @@
 #!/bin/bash
+# 这种install会缺乏维护，然后就没人用啊。应该是作为更新源头或者从现有环境中导出的迁移脚本。
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 function print_args () {
@@ -64,6 +66,10 @@ function link_file () {
     bash "$DIR"linker.sh link
 }
 
+function install_rbenv_gems () {
+    gem install gem-ctags yard
+}
+
 function install () {
     install_brew
     install_brew_app
@@ -78,6 +84,7 @@ if (($#==0)); then
     install_brew_app
     install_pip3
     link_file
+    install_rbenv_gems
     '
 else
     for i; do
