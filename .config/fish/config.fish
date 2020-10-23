@@ -2,7 +2,7 @@ set DIR (dirname (status -f))
 
 # Add RBENV init hook
 status --is-interactive; and source (rbenv init -|psub)
-set -xg PATH $PATH ~/.cargo/bin
+set -xg PATH ~/.cargo/bin $PATH
 
 set -xg EDITOR  'nvim'
 set -xg LANG  'zh_CN.UTF-8'
@@ -16,6 +16,7 @@ set -xg FZF_DEFAULT_OPTS ' --bind="alt-j:down,alt-k:up,alt-h:backward-char,alt-l
 # --exact'
 set -xg MANPAGER 'nvim +Man!'
 set -xg HOMEBREW_NO_AUTO_UPDATE 1
+set -xg USER_ID '6572338443358044419'
 
 # set -xg RUBYOPT '--jit -W:no-deprecated -W:no-experimental'
 # set -xg CP_CACHE_DIR $HOME/Library/Caches/CocoaPods/1.8.4

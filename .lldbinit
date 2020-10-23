@@ -1,3 +1,6 @@
+# 加载本地的.lldbinit文件, 可能有安全风险
+settings set target.load-cwd-lldbinit true
+
 command script import ~/lldb_script/customCommand.py
 com alias h   help
 com alias rr  register read
@@ -12,3 +15,11 @@ com alias o   thread   step-out
 # settings se stop-disassembly-count 1
 command script import /usr/local/opt/chisel/libexec/fblldb.py
 command script import ~/.cocoapods/eesc_lldb.py
+
+# rust formatter
+command script import ~/.rustup/toolchains/nightly-2020-05-07-x86_64-apple-darwin/lib/rustlib/etc/lldb_rust_formatters.py
+type summary add --no-value --python-function lldb_rust_formatters.print_val -x ".*" --category Rust
+# type category enable Rust
+
+# webkit
+# command script import ~/Documents/github/Apple/webkit/Tools/lldb/lldb_webkit.py

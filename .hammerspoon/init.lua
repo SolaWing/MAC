@@ -9,7 +9,7 @@ require "myext"
 -- hs.hotkey.bind(leaderModifier, 'R', "Reload Configuration", function()
 --     hs.reload()
 -- end)
-
+	
 
 -- fix: cross screen focus correct window
 function hs.window:focus()

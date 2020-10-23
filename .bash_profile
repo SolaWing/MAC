@@ -140,7 +140,7 @@ if [ -f /usr/local/Cellar/bash-completion/1.3/etc/bash_completion ]; then
     . /usr/local/Cellar/bash-completion/1.3/etc/bash_completion
 fi
 
-eval `/usr/libexec/path_helper -s` # will remove duplicates
-
+# will remove duplicates. but it change the path order and put system at front...
+# eval `/usr/libexec/path_helper -s`
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
